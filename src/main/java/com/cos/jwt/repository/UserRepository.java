@@ -1,4 +1,4 @@
-package com.cos.jwt.Repository;
+package com.cos.jwt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

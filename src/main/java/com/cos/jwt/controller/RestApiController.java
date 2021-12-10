@@ -1,8 +1,10 @@
 package com.cos.jwt.controller;
 
-import com.cos.jwt.Repository.UserRepository;
+import com.cos.jwt.auth.PrincipalDetails;
+import com.cos.jwt.repository.UserRepository;
 import com.cos.jwt.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,5 +32,23 @@ public class RestApiController {
         user.setRoles("ROLE_USER");
         userRepository.save(user);
         return "회원가입완료";
+    }
+
+    //user , manager, admin 권한 접근가능
+    @GetMapping("/api/v1/user")
+    public String user(Authentication authentication) {
+        return "user";
+    }
+
+    //manager, admin 권한 접근가능
+    @GetMapping("/api/v1/manager")
+    public String manager(Authentication authentication) {
+        return "manager";
+    }
+
+    //admin 권한 접근가능
+    @GetMapping("/api/v1/admin")
+    public String admin(Authentication authentication) {
+        return "admin";
     }
 }

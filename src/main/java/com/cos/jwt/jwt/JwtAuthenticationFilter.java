@@ -25,6 +25,7 @@ import java.util.Date;
 // UsernamePasswordAuthenticationFilter 동작을 함.
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     private final AuthenticationManager authenticationManager;
 
     //login요청을 하면 로그인 시도를 위해서 실행되는 함수
@@ -86,7 +87,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512("cos"));
 
         System.out.println("successfulAuthentication 실행됨 : 인증이 완료되었다는뜻");
-        super.successfulAuthentication(request,response,chain,authResult);
         System.out.println("Token: "+ jwtToken);
         response.addHeader("Authorization","Bearer "+jwtToken);
     }

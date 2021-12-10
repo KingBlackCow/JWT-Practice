@@ -1,6 +1,6 @@
 package com.cos.jwt.auth;
 
-import com.cos.jwt.Repository.UserRepository;
+import com.cos.jwt.repository.UserRepository;
 import com.cos.jwt.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
