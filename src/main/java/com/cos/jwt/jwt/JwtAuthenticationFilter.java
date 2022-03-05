@@ -36,14 +36,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 1. username, password 받아서
         try {
-//            BufferedReader br = request.getReader();
-//            String input = null;
-//            while ((input = br.readLine()) != null){
-//                System.out.println(input);
-//            }
             ObjectMapper om = new ObjectMapper(); //json데이터 파싱시켜줌
             User user = om.readValue(request.getInputStream(), User.class);// user에 담아줌
-            //System.out.println(user);
 
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
@@ -56,7 +50,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             //authentication객체가 session영역에 저장됨. => 로그인이 되었다는 뜻.
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            System.out.println("로그인완료됨? "+principalDetails.getUser().getUsername());//로그인이 정상적으로 저장되었다는 뜻.
+            System.out.println("로그인완료됨? " + principalDetails.getUser().getUsername());//로그인이 정상적으로 저장되었다는 뜻.
             //authentication 객체가 session영역에 저장됨.
             return authentication;
         } catch (IOException e) {
@@ -81,13 +75,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //Hash암호방식
         String jwtToken = JWT.create()
                 .withSubject("cos토큰")
-                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*10)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10)))
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("username", principalDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC512("cos"));
 
         System.out.println("successfulAuthentication 실행됨 : 인증이 완료되었다는뜻");
-        System.out.println("Token: "+ jwtToken);
-        response.addHeader("Authorization","Bearer "+jwtToken);
+        System.out.println("Token: " + jwtToken);
+        response.addHeader("Authorization", "Bearer " + jwtToken);
     }
 }
